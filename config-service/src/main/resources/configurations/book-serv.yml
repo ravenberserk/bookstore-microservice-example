@@ -1,5 +1,7 @@
 server:
   port: 2222
+  servlet:
+    context-path: /books
   
 spring:
   data:
@@ -8,7 +10,11 @@ spring:
       database: bookstore
       port: 27017
       
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:1111/eureka
+security:
+  oauth2:
+    client:
+      clientId: book-serv
+      clientSecret: 123456
+      accessTokenUri: http://localhost:4444/uaa/oauth/token
+      grant-type: client_credentials
+      scope: server

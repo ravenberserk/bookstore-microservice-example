@@ -14,22 +14,22 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-@Document(collection="books")
+@Document(collection = "books")
 public class Book {
-	
-	@Id
-	private String _id;
-	
-	@NotNull
-	private String title;
-	
-	@NotNull
-	private String summary;
 
-	public Book(@NotNull String title, @NotNull String summary) {
-		super();
-		this.title = title;
-		this.summary = summary;
-	}
-	
+    @Id
+    private String _id;
+
+    @NotNull
+    private String title;
+
+    @NotNull
+    private String summary;
+
+    public Book(@NotNull String title, @NotNull String summary) {
+	super();
+	this.title = title;
+	this.summary = summary;
+    }
+
 }

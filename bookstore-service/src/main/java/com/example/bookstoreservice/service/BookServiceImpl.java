@@ -11,24 +11,22 @@ import com.example.bookstoreservice.repository.BookRepository;
 @Service
 public class BookServiceImpl implements BookService {
 
-	@Autowired
-	private BookRepository bookRepository;
-	
-	@Override
-	public Book create(String title, String summary) {
-		return bookRepository.save(new Book(title,summary));
-	}
-	
-	@Override
-	public Optional<Book> findBook(String bookId) {
-		return bookRepository.findById(bookId);
-	}
+    @Autowired
+    private BookRepository bookRepository;
 
-	@Override
-	public Iterable<Book> findAll() {
-		return bookRepository.findAll();
-	}
+    @Override
+    public Book create(String title, String summary) {
+	return bookRepository.save(new Book(title, summary));
+    }
 
-	
+    @Override
+    public Optional<Book> findBook(String bookId) {
+	return bookRepository.findById(bookId);
+    }
+
+    @Override
+    public Iterable<Book> findAll() {
+	return bookRepository.findAll();
+    }
 
 }
