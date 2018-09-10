@@ -15,12 +15,12 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 	// @formatter:off
         clients.inMemory()
                 .withClient("book-serv")
-                .secret("{noop}123456")
+                .secret("{noop}${BOOKSERV-PASSWORD}")
                 .authorizedGrantTypes("client_credentials", "refresh_token")
                 .scopes("server")
             .and()
                 .withClient("log-serv")
-                .secret("{noop}123456")
+                .secret("{noop}${LOGSERV-PASSWORD}")
                 .authorizedGrantTypes("client_credentials", "refresh_token")
                 .scopes("server");
         // @formatter:on

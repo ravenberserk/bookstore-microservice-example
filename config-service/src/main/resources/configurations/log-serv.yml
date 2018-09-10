@@ -19,7 +19,7 @@ security:
   oauth2:
     client:
       clientId: log-serv
-      clientSecret: 123456
+      clientSecret: ${LOGSERV-PASSWORD}
       accessTokenUri: http://localhost:4444/uaa/oauth/token
       grant-type: client_credentials
       scope: server
