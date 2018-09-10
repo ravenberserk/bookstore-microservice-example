@@ -16,6 +16,11 @@ spring:
           destination: logExchange
       default:
         contentType: application/json
+      rabbit:
+        bindings:
+          bookRegistrationChannel:
+            producer:
+              routing-key-expression: "'book.created'"
       
 security:
   oauth2:
