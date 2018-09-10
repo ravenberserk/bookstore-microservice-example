@@ -4,3 +4,9 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
+    stream:
+      bindings:
+        bookRegistrationChannel:
+          destination: registrationChannel
+      default:
+        contentType: application/json
