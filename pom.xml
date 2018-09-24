@@ -4,10 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.example</groupId>
-	<artifactId>accountexample</artifactId>
+	<artifactId>bookstore</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>accountexample</name>
+	<name>bookstore</name>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
