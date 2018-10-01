@@ -1,11 +1,2 @@
 server:
   port: 5555
-
-security:
-  oauth2:
-    client:
-      clientId: gateway-serv
-      clientSecret: ${GATESERV-PASSWORD}
-      accessTokenUri: http://localhost:4444/uaa/oauth/token
-      grant-type: client_credentials
-      scope: server

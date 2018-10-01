@@ -6,8 +6,11 @@ spring:
       uri: http://localhost:8888
 
 zuul:
+  ignoredServices: '*'
   routes:
     book-serv:
-      path: /mybooks/**
+      path: /books/**
       serviceId: book-serv
+      stripPrefix: false
+      sensitiveHeaders:
       
