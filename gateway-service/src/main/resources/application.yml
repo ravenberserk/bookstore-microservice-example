@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: gateway-serv
+  cloud:
+    config:
+      uri: http://localhost:8888
+
+zuul:
+  routes:
+    book-serv:
+      path: /mybooks/**
+      serviceId: book-serv
+      

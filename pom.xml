@@ -52,5 +52,6 @@
 		<module>bookstore-service</module>
 		<module>auth-service</module>
 		<module>logging-service</module>
-	</modules>
+        <module>gateway-service</module>
+    </modules>
 </project>
