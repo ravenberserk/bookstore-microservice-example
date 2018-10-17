@@ -5,9 +5,12 @@ spring:
     config:
       uri: http://localhost:8888
     gateway:
+      discovery:
+        locator:
+          enabled: true
       routes:
       - id: bookserv
-        uri: http://localhost:2222
+        uri: lb://book-serv
         predicates:
         - Path=/libros/**
         filters:
