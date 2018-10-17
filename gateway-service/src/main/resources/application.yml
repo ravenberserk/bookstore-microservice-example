@@ -4,13 +4,11 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
-
-zuul:
-  ignoredServices: '*'
-  routes:
-    book-serv:
-      path: /books/**
-      serviceId: book-serv
-      stripPrefix: false
-      sensitiveHeaders:
-      
+    gateway:
+      routes:
+      - id: bookserv
+        uri: http://localhost:2222
+        predicates:
+        - Path=/libros/**
+        filters:
+        - RewritePath=/libros/(?<segment>.*), /books/$\{segment}
