@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>config-service</artifactId>
-	<name>config-service</name>
+	<name>config</name>
 
 	<parent>
 		<groupId>com.example</groupId>
