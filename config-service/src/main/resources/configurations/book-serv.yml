@@ -6,7 +6,7 @@ server:
 spring:
   data:
     mongodb:
-      host: localhost
+      host: bookMongoDb
       database: bookstore
       port: 27017
   cloud:
@@ -27,6 +27,6 @@ security:
     client:
       clientId: book-serv
       clientSecret: ${BOOKSERV-PASSWORD}
-      accessTokenUri: http://localhost:4444/uaa/oauth/token
+      accessTokenUri: http://authserv:4444/uaa/oauth/token
       grant-type: client_credentials
       scope: server
