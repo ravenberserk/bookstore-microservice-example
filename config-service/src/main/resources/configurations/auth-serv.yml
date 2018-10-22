@@ -1,8 +1,8 @@
 spring:
   data:
     mongodb:
-      host: authMongoDb
-      database: auth
+      host: localhost
+      database: authMongoDb
       port: 27017
 
 server:
