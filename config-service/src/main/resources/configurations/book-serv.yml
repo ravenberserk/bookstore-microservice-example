@@ -6,14 +6,14 @@ server:
 spring:
   data:
     mongodb:
-      host: bookMongoDb
-      database: bookstore
+      host: localhost
+      database: bookMongoDb
       port: 27017
   cloud:
     stream:
       bindings:
         bookRegistrationChannel:
-          destination: logExchange
+          destination: registrationChannel
       default:
         contentType: application/json
       rabbit:
