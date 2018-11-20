@@ -1,2 +1,16 @@
 server:
   port: 5555
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: bookserv
+        uri: lb://book-serv
+        predicates:
+        - Path=/libros/**
+        filters:
+        - RewritePath=/libros/(?<segment>.*), /books/$\{segment}
