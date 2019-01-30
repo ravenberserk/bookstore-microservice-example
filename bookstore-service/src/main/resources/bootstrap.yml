@@ -3,4 +3,7 @@ spring:
     name: book-serv
   cloud:
     config:
-      uri: http://localhost:8888
+      uri: http://config:8888
+      fail-fast: true
+      password: ${CONFIG_PASSWORD}
+      username: user
