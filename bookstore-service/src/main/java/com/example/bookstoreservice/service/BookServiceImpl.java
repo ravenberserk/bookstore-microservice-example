@@ -4,7 +4,6 @@ import com.example.bookstoreservice.domain.Book;
 import com.example.bookstoreservice.repository.BookRepository;
 import com.example.bookstoreservice.source.BookRegistrationSource;
 import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.messaging.support.MessageBuilder;

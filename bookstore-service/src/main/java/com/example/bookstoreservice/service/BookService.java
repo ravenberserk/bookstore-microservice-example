@@ -1,8 +1,8 @@
 package com.example.bookstoreservice.service;
 
-import java.util.Optional;
-
 import com.example.bookstoreservice.domain.Book;
+
+import java.util.Optional;
 
 public interface BookService {
 

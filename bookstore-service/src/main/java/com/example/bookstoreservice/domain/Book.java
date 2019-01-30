@@ -1,14 +1,13 @@
 package com.example.bookstoreservice.domain;
 
-import javax.validation.constraints.NotNull;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -27,9 +26,9 @@ public class Book {
     private String summary;
 
     public Book(@NotNull String title, @NotNull String summary) {
-	super();
-	this.title = title;
-	this.summary = summary;
+        super();
+        this.title = title;
+        this.summary = summary;
     }
 
 }

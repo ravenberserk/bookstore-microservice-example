@@ -8,12 +8,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableOAuth2Client
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class BookStoreServiceApp {
 
     public static void main(String[] args) {
-	SpringApplication.run(BookStoreServiceApp.class, args);
+        SpringApplication.run(BookStoreServiceApp.class, args);
     }
 
 }

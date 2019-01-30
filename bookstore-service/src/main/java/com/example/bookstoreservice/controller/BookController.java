@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.NoSuchElementException;
 
-
 @RestController
 public class BookController {
-
 
     @Autowired
     private BookService bookService;
@@ -34,7 +32,7 @@ public class BookController {
     @GetMapping(path = "/{bookId}")
     public ResponseEntity<Book> getBook(@PathVariable("bookId") String bookId) {
         return new ResponseEntity<>(bookService.findBook(bookId).orElseThrow(NoSuchElementException::new),
-                HttpStatus.OK);
+                                    HttpStatus.OK);
     }
 
 }
