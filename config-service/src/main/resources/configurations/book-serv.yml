@@ -21,8 +21,8 @@ spring:
 security:
   oauth2:
     client:
-      clientId: book-serv
-      clientSecret: ${BOOKSERV-PASSWORD}
+      clientId: bookserv
+      clientSecret: ${BOOKSERV_PASSWORD}
       accessTokenUri: http://authserv:8080/uaa/oauth/token
       grant-type: client_credentials
       scope: server
