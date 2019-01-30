@@ -23,6 +23,6 @@ security:
     client:
       clientId: book-serv
       clientSecret: ${BOOKSERV-PASSWORD}
-      accessTokenUri: http://authserv:8081/uaa/oauth/token
+      accessTokenUri: http://authserv:8080/uaa/oauth/token
       grant-type: client_credentials
       scope: server
