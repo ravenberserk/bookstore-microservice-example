@@ -1,4 +1,4 @@
-FROM openjdk:8-jre
+FROM openjdk:11-jre
 MAINTAINER Javier Grande Pérez <grande.perez.javier@gmail.com>
 
 ADD ./target/gateway.jar /app/
