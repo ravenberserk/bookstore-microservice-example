@@ -12,7 +12,7 @@ logging:
 security:
   oauth2:
     resource:
-      user-info-uri: http://authserv:8080/uaa/users/current
+      user-info-uri: http://authserv:8080/auth/users/current
 
 spring:
   rabbitmq:
