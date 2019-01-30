@@ -3,13 +3,26 @@ eureka:
     prefer-ip-address: true
   client:
     serviceUrl:
-      defaultZone: http://localhost:1111/eureka
-      
+      defaultZone: http://registry:8761/eureka
+
 logging:
   level:
     org.springframework.security: INFO
-    
+
 security:
   oauth2:
     resource:
-      user-info-uri: http://localhost:4444/uaa/users/current
+      user-info-uri: http://authserv:8081/uaa/users/current
+
+spring:
+  rabbitmq:
+    host: rabbitmq
+    username: ${RABBIT_USER}
+    password: ${RABBIT_PASS}
+    listener:
+      direct:
+        retry:
+          enabled: true
+      simple:
+        retry:
+          enabled: true

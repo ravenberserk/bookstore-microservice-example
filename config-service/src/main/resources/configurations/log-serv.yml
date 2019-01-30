@@ -1,6 +1,3 @@
-server:
-  port: 3333
-  
 spring:
   cloud:
     stream:
@@ -8,9 +5,3 @@ spring:
         input:
           destination: registrationChannel
           group: log-queue
-      rabbit:
-        bindings:
-          input:
-            consumer:
-              bindingRoutingKey: "*.created"
-              exchangeType: topic

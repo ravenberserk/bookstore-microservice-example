@@ -1,11 +1,12 @@
+server:
+  servlet:
+    context-path: /uaa
+
 spring:
   data:
     mongodb:
-      host: localhost
-      database: authMongoDb
+      host: authdb
+      username: ${AUTHDB_USER}
+      password: ${AUTHDB_PASSWORD}
+      database: ${AUTHDB_DB}
       port: 27017
-
-server:
-  port: 4444
-  servlet:
-    context-path: /uaa

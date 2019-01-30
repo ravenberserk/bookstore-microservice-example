@@ -1,13 +1,14 @@
 server:
-  port: 2222
   servlet:
     context-path: /books
-  
+
 spring:
   data:
     mongodb:
-      host: localhost
-      database: bookMongoDb
+      host: bookdb
+      username: ${AUTHDB_USER}
+      password: ${AUTHDB_PASSWORD}
+      database: ${AUTHDB_DB}
       port: 27017
   cloud:
     stream:
@@ -16,17 +17,12 @@ spring:
           destination: registrationChannel
       default:
         contentType: application/json
-      rabbit:
-        bindings:
-          bookRegistrationChannel:
-            producer:
-              routing-key-expression: "'book.created'"
-      
+
 security:
   oauth2:
     client:
       clientId: book-serv
       clientSecret: ${BOOKSERV-PASSWORD}
-      accessTokenUri: http://localhost:4444/uaa/oauth/token
+      accessTokenUri: http://authserv:8081/uaa/oauth/token
       grant-type: client_credentials
       scope: server
