@@ -5,9 +5,9 @@ spring:
         locator:
           enabled: true
       routes:
-      - id: bookserv
-        uri: lb://book-serv
-        predicates:
-        - Path=/libros/**
-        filters:
-        - RewritePath=/libros/(?<segment>.*), /books/$\{segment}
+        - id: bookserv
+          uri: lb://book-serv
+          predicates:
+            - Path=/libros/**
+          filters:
+            - RewritePath=/libros/(?<segment>.*), /books/$\{segment}
