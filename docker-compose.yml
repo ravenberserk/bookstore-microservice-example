@@ -1,0 +1,87 @@
+version: "3.7"
+services:
+  config:
+    image: bookstore-config
+    ports:
+      - "8888:8888"
+    environment:
+      CONFIG_PASSWORD: ${CONFIG_PASSWORD}
+      ENCRYPT_PASSWORD: ${ENCRYPT_PASSWORD}
+
+  registry:
+    image: bookstore-registry
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config
+    restart: on-failure
+    environment:
+      CONFIG_PASSWORD: ${CONFIG_PASSWORD}
+
+  authdb:
+    image: mongo
+    ports:
+      - "4000:27017"
+
+  authserv:
+    image: bookstore-authserv
+    ports:
+      - "8081:8080"
+    depends_on:
+      - config
+      - authdb
+      - registry
+    restart: on-failure
+    environment:
+      CONFIG_PASSWORD: ${CONFIG_PASSWORD}
+      AUTHDB_DB: ${AUTHDB_DB}
+      BROWSER_PASSWORD: ${BROWSER_PASSWORD}
+      BOOKSERV_PASSWORD: ${BOOKSERV_PASSWORD}
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBIT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBIT_PASS}
+
+  bookdb:
+    image: mongo
+    ports:
+      - "4001:27017"
+
+  bookserv:
+    image: bookstore-bookserv
+    ports:
+      - "8082:8080"
+    depends_on:
+      - config
+      - bookdb
+      - authserv
+      - registry
+    restart: on-failure
+    environment:
+      CONFIG_PASSWORD: ${CONFIG_PASSWORD}
+      BOOKDB_DB: ${BOOKDB_DB}
+      BOOKSERV_PASSWORD: ${BOOKSERV_PASSWORD}
+      RABBIT_USER: ${RABBIT_USER}
+      RABBIT_PASS: ${RABBIT_PASS}
+
+  logserv:
+    image: bookstore-logserv
+    depends_on:
+      - rabbitmq
+    restart: on-failure
+    environment:
+      CONFIG_PASSWORD: ${CONFIG_PASSWORD}
+      RABBIT_USER: ${RABBIT_USER}
+      RABBIT_PASS: ${RABBIT_PASS}
+
+  gateway:
+    image: bookstore-gateway
+    ports:
+      - "8083:8080"
+    restart: on-failure
+    environment:
+      CONFIG_PASSWORD: ${CONFIG_PASSWORD}
