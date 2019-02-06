@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  evaluation_interval: 15s
+scrape_configs:
+  - job_name: 'bookserv'
+    scrape_interval: 5s
+    metrics_path: '/actuator/prometheus'
+    basic_auth:
+      username: user
+      password: Actuator.1234
+    static_configs:
+      - targets: ['bookserv:8081']
