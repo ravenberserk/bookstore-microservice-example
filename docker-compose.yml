@@ -87,3 +87,12 @@ services:
     restart: on-failure
     environment:
       CONFIG_PASSWORD: ${CONFIG_PASSWORD}
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - .\config\prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
