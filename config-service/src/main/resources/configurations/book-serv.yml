@@ -15,6 +15,9 @@ spring:
           destination: registrationChannel
       default:
         contentType: application/json
+  security:
+    user:
+      password: ${ACTUATOR_PASSWORD}
 
 security:
   oauth2:
@@ -31,4 +34,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: '*'
+        include: info, health, prometheus

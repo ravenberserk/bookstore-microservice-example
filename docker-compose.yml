@@ -68,6 +68,7 @@ services:
       BOOKSERV_PASSWORD: ${BOOKSERV_PASSWORD}
       RABBIT_USER: ${RABBIT_USER}
       RABBIT_PASS: ${RABBIT_PASS}
+      ACTUATOR_PASSWORD: ${ACTUATOR_PASSWORD}
 
   logserv:
     image: bookstore-logserv
