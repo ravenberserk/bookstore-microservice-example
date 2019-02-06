@@ -55,6 +55,7 @@ services:
     image: bookstore-bookserv
     ports:
       - "8082:8080"
+      - "9082:8081"
     depends_on:
       - config
       - bookdb

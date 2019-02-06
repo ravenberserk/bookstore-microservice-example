@@ -24,3 +24,11 @@ security:
       accessTokenUri: http://authserv:8080/auth/oauth/token
       grant-type: client_credentials
       scope: server
+
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      exposure:
+        include: '*'
