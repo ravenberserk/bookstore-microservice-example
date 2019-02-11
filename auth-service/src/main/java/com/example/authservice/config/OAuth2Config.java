@@ -2,6 +2,7 @@ package com.example.authservice.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,8 +19,6 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 @EnableAuthorizationServer
 public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
-    private TokenStore tokenStore = new InMemoryTokenStore();
-
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
@@ -29,6 +28,9 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     private Environment env;
+
+    @Bean
+    public TokenStore tokenStore() { return new InMemoryTokenStore(); }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -44,6 +46,7 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
                 .authorizedGrantTypes("authorization_code", "refresh_token")
                 .scopes("ui")
                 .autoApprove(true)
+                .redirectUris("http://bookserv:8080/")
                 ;
         // @formatter:on
     }
@@ -56,7 +59,7 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore).authenticationManager(authenticationManager);
+        endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager);
     }
 
 }
