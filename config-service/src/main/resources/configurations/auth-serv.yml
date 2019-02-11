@@ -3,8 +3,11 @@ server:
     context-path: /auth
 
 spring:
-  data:
-    mongodb:
-      host: authdb
-      database: ${AUTHDB_DB}
-      port: 27017
+  datasource:
+    url: jdbc:mysql://authdb:3306/${AUTHDB_DB}?useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
