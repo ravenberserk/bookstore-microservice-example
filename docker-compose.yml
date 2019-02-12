@@ -19,9 +19,17 @@ services:
       CONFIG_PASSWORD: ${CONFIG_PASSWORD}
 
   authdb:
-    image: mongo
+    image: mariadb
     ports:
-      - "4000:27017"
+      - "4000:3306"
+    volumes:
+      - bookstore-authdb:/var/lib/mysql
+      - .\config\authdb.sql:/docker-entrypoint-initdb.d/authdb.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${AUTHDB_ROOT_PASS}
+      MYSQL_DATABASE: ${AUTHDB_DB}
+      MYSQL_USER: ${AUTHDB_USER}
+      MYSQL_PASSWORD: ${AUTHDB_PASSWORD}
 
   authserv:
     image: bookstore-authserv
@@ -34,9 +42,11 @@ services:
     restart: on-failure
     environment:
       CONFIG_PASSWORD: ${CONFIG_PASSWORD}
-      AUTHDB_DB: ${AUTHDB_DB}
       BROWSER_PASSWORD: ${BROWSER_PASSWORD}
       BOOKSERV_PASSWORD: ${BOOKSERV_PASSWORD}
+      AUTHDB_DB: ${AUTHDB_DB}
+      MYSQL_USER: ${AUTHDB_USER}
+      MYSQL_PASSWORD: ${AUTHDB_PASSWORD}
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -109,3 +119,6 @@ services:
       - prometheus
     environment:
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_USER_PASS}
+
+volumes:
+  bookstore-authdb:
