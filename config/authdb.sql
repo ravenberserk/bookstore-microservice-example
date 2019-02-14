@@ -51,7 +51,11 @@ CREATE TABLE IF NOT EXISTS oauth_approvals(
   lastModifiedAt TIMESTAMP
 );
 
--- Inserts de usuarios.
+-- Inserts de clients.
+-- Passwords:
+---- oauth2-root-admin: admin.1234
+---- book: book.1234
+---- browser: browser.1234
 INSERT INTO oauth_client_details(client_id,
                                  client_secret,
                                  scope,
@@ -63,4 +67,16 @@ VALUES ("oauth2-root-admin",
         "root,server,internal",
         "client_credentials",
         "ROLE_ROOT_ADMIN",
-        true);
+        true),
+        ("book",
+         "$2a$10$GLDzkQv4DvOXB3BPQIzVOuT3GDsp0UeT./YFy1PxiA4/PO4cUDRqa",
+         "server,internal",
+         "client_credentials",
+         "ROLE_INTERNAL",
+         true),
+        ("browser",
+         "$2a$10$PGGe3BPaGacRHltTJD9kxOtWO2AY0jU4EWrnZWUrCcZgU99x992sC",
+         "ui,external",
+         "authorization_code",
+         "ROLE_EXTERNAL",
+         true)
