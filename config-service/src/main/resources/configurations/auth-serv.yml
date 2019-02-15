@@ -5,8 +5,8 @@ server:
 spring:
   datasource:
     url: jdbc:mysql://authdb:3306/${AUTHDB_DB}?useLegacyDatetimeCode=false&serverTimezone=UTC
-    username: ${MYSQL_USER}
-    password: ${MYSQL_PASSWORD}
+    username: ${AUTHDB_USER}
+    password: ${AUTHDB_PASSWORD}
   jpa:
     properties:
       hibernate:

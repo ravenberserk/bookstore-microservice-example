@@ -51,6 +51,31 @@ CREATE TABLE IF NOT EXISTS oauth_approvals(
   lastModifiedAt TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS users(
+  id INTEGER NOT NULL AUTO_INCREMENT,
+  username VARCHAR(256) NOT NULL,
+  password VARCHAR(256) NOT NULL,
+  account_non_expired BIT(1) NOT NULL DEFAULT 1,
+  account_non_locked BIT(1) NOT NULL DEFAULT 1,
+  credentials_non_expired BIT(1) NOT NULL DEFAULT 1,
+  enabled BIT(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY(id),
+  UNIQUE INDEX ux_username(username)
+);
+
+CREATE TABLE IF NOT EXISTS authorities(
+  id INTEGER NOT NULL AUTO_INCREMENT,
+  authority VARCHAR(256) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE INDEX ux_authority(authority)
+);
+
+CREATE TABLE IF NOT EXISTS users_authorities(
+  user_id INTEGER NOT NULL,
+  authorities_id INTEGER NOT NULL,
+  PRIMARY KEY (user_id, authorities_id)
+);
+
 -- Inserts de clients.
 -- Passwords:
 ---- oauth2-root-admin: admin.1234
@@ -60,23 +85,48 @@ INSERT INTO oauth_client_details(client_id,
                                  client_secret,
                                  scope,
                                  authorized_grant_types,
+                                 web_server_redirect_uri,
                                  authorities,
                                  autoapprove)
 VALUES ("oauth2-root-admin",
         "$2a$10$tmFlR8sXV1FvPhK/7pghw.M0m9ssDk80kBnXVF18B9aXp8/wimJva",
         "root,server,internal",
         "client_credentials",
+        "",
         "ROLE_ROOT_ADMIN",
         true),
         ("book",
          "$2a$10$GLDzkQv4DvOXB3BPQIzVOuT3GDsp0UeT./YFy1PxiA4/PO4cUDRqa",
          "server,internal",
-         "client_credentials",
+         "client_credentials,refresh_token",
+         "",
          "ROLE_INTERNAL",
          true),
         ("browser",
          "$2a$10$PGGe3BPaGacRHltTJD9kxOtWO2AY0jU4EWrnZWUrCcZgU99x992sC",
          "ui,external",
-         "authorization_code",
+         "authorization_code,refresh_token",
+         "http://bookserv:8080/",
          "ROLE_EXTERNAL",
-         true)
+         true);
+
+-- Inserts de Roles.
+INSERT INTO authorities(authority)
+VALUES("ROLE_ADMIN"),
+      ("ROLE_USER");
+
+-- Inserts de usuarios.
+-- Passwords:
+---- admin: admin
+---- user: user
+INSERT INTO users(username, password)
+VALUES ("admin", "$2a$10$TGZK16ooMNWm/JXXii1HHui5nbsGZPSvhpqyi8s09DoqBGyZehGhG"),
+       ("user", "$2a$10$ojvNThD3wW2WVkAI2khxfOCLQi87EmnhMmZJvipdqBrABuhXQ9YIC");
+
+-- Roles de usuario.
+---- admin: ROLE_ADMIN
+---- user: ROLE_USER
+INSERT INTO users_authorities(user_id, authorities_id)
+VALUES (1, 1),
+       (1, 2),
+       (2, 2);

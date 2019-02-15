@@ -42,11 +42,9 @@ services:
     restart: on-failure
     environment:
       CONFIG_PASSWORD: ${CONFIG_PASSWORD}
-      BROWSER_PASSWORD: ${BROWSER_PASSWORD}
-      BOOKSERV_PASSWORD: ${BOOKSERV_PASSWORD}
       AUTHDB_DB: ${AUTHDB_DB}
-      MYSQL_USER: ${AUTHDB_USER}
-      MYSQL_PASSWORD: ${AUTHDB_PASSWORD}
+      AUTHDB_USER: ${AUTHDB_USER}
+      AUTHDB_PASSWORD: ${AUTHDB_PASSWORD}
 
   rabbitmq:
     image: rabbitmq:3-management
