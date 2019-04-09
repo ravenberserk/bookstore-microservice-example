@@ -6,7 +6,7 @@ spring:
   data:
     mongodb:
       host: bookdb
-      database: ${BOOKDB_DB}
+      database: bookstore_books
       port: 27017
   cloud:
     stream:
@@ -17,13 +17,13 @@ spring:
         contentType: application/json
   security:
     user:
-      password: ${ACTUATOR_PASSWORD}
+      password: '{cipher}557dc09a677b8663bcba9e6831b2d16eca2ef4bfa38d63ef1d890aa1879a0659'
 
 security:
   oauth2:
     client:
       clientId: book
-      clientSecret: ${BOOKSERV_PASSWORD}
+      clientSecret: '{cipher}9d0fa279428c71892ca14fe3843896bb5bf87737da1b4b02af4dda05af06d121'
       accessTokenUri: http://authserv:8080/auth/oauth/token
       grant-type: client_credentials
       scope: server

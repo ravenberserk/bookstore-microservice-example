@@ -24,10 +24,10 @@ services:
       - "4000:3306"
     volumes:
       - bookstore-authdb:/var/lib/mysql
-      - .\config\authdb.sql:/docker-entrypoint-initdb.d/authdb.sql
+      - ./deploy/config/authdb.sql:/docker-entrypoint-initdb.d/authdb.sql
     environment:
-      MYSQL_ROOT_PASSWORD: ${AUTHDB_ROOT_PASS}
       MYSQL_DATABASE: ${AUTHDB_DB}
+      MYSQL_ROOT_PASSWORD: ${AUTHDB_ROOT}
       MYSQL_USER: ${AUTHDB_USER}
       MYSQL_PASSWORD: ${AUTHDB_PASSWORD}
 
@@ -42,9 +42,8 @@ services:
     restart: on-failure
     environment:
       CONFIG_PASSWORD: ${CONFIG_PASSWORD}
-      AUTHDB_DB: ${AUTHDB_DB}
-      AUTHDB_USER: ${AUTHDB_USER}
-      AUTHDB_PASSWORD: ${AUTHDB_PASSWORD}
+      DB_USER: ${AUTHDB_USER}
+      DB_PASSWORD: ${AUTHDB_PASSWORD}
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -76,11 +75,8 @@ services:
     restart: on-failure
     environment:
       CONFIG_PASSWORD: ${CONFIG_PASSWORD}
-      BOOKDB_DB: ${BOOKDB_DB}
-      BOOKSERV_PASSWORD: ${BOOKSERV_PASSWORD}
       RABBIT_USER: ${RABBIT_USER}
       RABBIT_PASS: ${RABBIT_PASS}
-      ACTUATOR_PASSWORD: ${ACTUATOR_PASSWORD}
 
   logserv:
     image: bookstore-logserv
@@ -105,7 +101,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - .\config\prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./deploy/config/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'

@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS oauth_client_details(
   access_token_validity INTEGER DEFAULT 36000,
   refresh_token_validity INTEGER DEFAULT 36000,
   additional_information VARCHAR(4096),
-  autoapprove BIT(1)
+  autoapprove VARCHAR(256)
 );
 
 CREATE TABLE IF NOT EXISTS oauth_client_token(
@@ -94,21 +94,21 @@ VALUES ("oauth2-root-admin",
         "client_credentials",
         "",
         "ROLE_ROOT_ADMIN",
-        true),
+        ""),
         ("book",
          "$2a$10$GLDzkQv4DvOXB3BPQIzVOuT3GDsp0UeT./YFy1PxiA4/PO4cUDRqa",
          "server,internal",
          "client_credentials,refresh_token",
          "",
          "ROLE_INTERNAL",
-         true),
+         ""),
         ("browser",
          "$2a$10$PGGe3BPaGacRHltTJD9kxOtWO2AY0jU4EWrnZWUrCcZgU99x992sC",
          "ui,external",
          "authorization_code,refresh_token",
          "http://bookserv:8080/",
          "ROLE_EXTERNAL",
-         true);
+         "ui");
 
 -- Inserts de Roles.
 INSERT INTO authorities(authority)
