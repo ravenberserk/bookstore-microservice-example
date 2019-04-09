@@ -12,18 +12,15 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.2.RELEASE</version>
+        <version>2.1.4.RELEASE</version>
         <relativePath/>
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
-        <java.version>11</java.version>
-        <jaxb-core-version>2.3.0</jaxb-core-version>
-        <jaxb-impl-version>2.3.1</jaxb-impl-version>
-        <activation-version>1.1.1</activation-version>
+        <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
+        <java.version>12</java.version>
     </properties>
 
     <dependencyManagement>
@@ -39,13 +36,11 @@
     </dependencyManagement>
 
     <build>
+        <finalName>${project.name}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <finalName>${project.name}</finalName>
-                </configuration>
             </plugin>
         </plugins>
     </build>

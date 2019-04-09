@@ -1,7 +1,10 @@
-FROM openjdk:11-jre
-MAINTAINER Javier Grande Pérez <grande.perez.javier@gmail.com>
+FROM openjdk:12-jdk
 
-ADD ./target/bookserv.jar /app/
-CMD ["java", "-Xmx200m", "-jar", "/app/bookserv.jar"]
+LABEL maintainer="Javier Grande Pérez <grande.perez.javier@gmail.com>" \
+      version="1.0"
+
+WORKDIR "/opt/app"
+COPY target/bookserv.jar ./
+CMD ["java", "-jar", "bookserv.jar"]
 
 EXPOSE 8080 8081

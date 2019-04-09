@@ -1,7 +1,10 @@
-FROM openjdk:11-jre
-MAINTAINER Javier Grande Pérez <grande.perez.javier@gmail.com>
+FROM openjdk:12-jdk
 
-ADD ./target/gateway.jar /app/
-CMD ["java", "-Xmx200m", "-jar", "/app/gateway.jar"]
+LABEL maintainer="Javier Grande Pérez <grande.perez.javier@gmail.com>" \
+      version="1.0"
+
+WORKDIR "/opt/app"
+COPY target/gateway.jar ./
+CMD ["java", "-jar", "gateway.jar"]
 
 EXPOSE 8080

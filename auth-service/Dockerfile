@@ -1,7 +1,10 @@
-FROM openjdk:11-jre
-MAINTAINER Javier Grande Pérez <grande.perez.javier@gmail.com>
+FROM openjdk:12-jdk
 
-ADD ./target/authserv.jar /app/
-CMD ["java", "-Xmx200m", "-jar", "/app/authserv.jar"]
+LABEL maintainer="Javier Grande Pérez <grande.perez.javier@gmail.com>" \
+      version="1.0"
+
+WORKDIR "/opt/app"
+COPY target/authserv.jar ./
+CMD ["java", "-jar", "authserv.jar"]
 
 EXPOSE 8080

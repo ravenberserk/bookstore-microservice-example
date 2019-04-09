@@ -1,7 +1,10 @@
-FROM openjdk:11-jre
-MAINTAINER Javier Grande Pérez <grande.perez.javier@gmail.com>
+FROM openjdk:12-jdk
 
-ADD ./target/config.jar /app/
-CMD ["java", "-Xmx200m", "-jar", "/app/config.jar"]
+LABEL maintainer="Javier Grande Pérez <grande.perez.javier@gmail.com>" \
+      version="1.0"
+
+WORKDIR "/opt/app"
+COPY target/config.jar ./
+CMD ["java", "-jar", "config.jar"]
 
 EXPOSE 8888
