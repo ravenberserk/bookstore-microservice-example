@@ -23,7 +23,7 @@ services:
     ports:
       - "4000:3306"
     volumes:
-      - bookstore-authdb:/var/lib/mysql
+      - authdb_data:/var/lib/mysql
       - ./deploy/config/authdb.sql:/docker-entrypoint-initdb.d/authdb.sql
     environment:
       MYSQL_DATABASE: ${AUTHDB_DB}
@@ -50,7 +50,7 @@ services:
     ports:
       - "15672:15672"
     volumes:
-      - rabbit:/var/lib/rabbitmq
+      - rabbitmq_directory:/var/lib/rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBIT_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBIT_PASS}
@@ -60,7 +60,8 @@ services:
     ports:
       - "4001:27017"
     volumes:
-      - bookstore-bookdb:/data/db
+      - bookdb_data:/data/db
+      - bookdb_config:/data/configdb
 
   bookserv:
     image: bookstore-bookserv
@@ -119,8 +120,9 @@ services:
       GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_USER_PASS}
 
 volumes:
-  bookstore-authdb:
-  bookstore-bookdb:
+  authdb_data:
+  bookdb_data:
+  bookdb_config:
   grafana:
   prometheus:
-  rabbit:
+  rabbitmq_directory:

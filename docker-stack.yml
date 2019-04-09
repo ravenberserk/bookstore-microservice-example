@@ -113,6 +113,7 @@ services:
         max_attempts: 5
     volumes:
       - bookdb_data:/data/db
+      - bookdb_config:/data/configdb
     networks:
       - cloud
 
@@ -211,10 +212,11 @@ services:
 
 volumes:
   authdb_data:
-  rabbitmq_directory:
   bookdb_data:
-  prometheus:
+  bookdb_config:
   grafana:
+  prometheus:
+  rabbitmq_directory:
 
 networks:
   cloud:
