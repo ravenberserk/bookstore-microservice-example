@@ -1,0 +1,244 @@
+version: "3.7"
+services:
+  config:
+    image: bookstore-config
+    ports:
+      - "8888:8888"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+    secrets:
+      - config_password
+      - config_encrypt
+    environment:
+      CONFIG_PASSWORD_FILE: /run/secrets/config_password
+      ENCRYPT_PASSWORD_FILE: /run/secrets/config_encrypt
+    networks:
+      - cloud
+
+  registry:
+    image: bookstore-registry
+    ports:
+      - "8761:8761"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+    secrets:
+      - config_password
+    environment:
+      CONFIG_PASSWORD_FILE: /run/secrets/config_password
+    networks:
+      - cloud
+
+  authdb:
+    image: mariadb
+    ports:
+      - "4000:3306"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+    volumes:
+      - authdb_data:/var/lib/mysql
+    configs:
+      - source: authdb_generate
+        target: /docker-entrypoint-initdb.d/01.generate.sql
+    secrets:
+      - authdb_root
+      - authdb_user
+      - authdb_pass
+    environment:
+      MYSQL_DATABASE: authdb
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/authdb_root
+      MYSQL_USER_FILE: /run/secrets/authdb_user
+      MYSQL_PASSWORD_FILE: /run/secrets/authdb_pass
+    networks:
+      - cloud
+
+  authserv:
+    image: bookstore-authserv
+    ports:
+      - "8081:8080"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+    secrets:
+      - config_password
+      - authdb_user
+      - authdb_pass
+    environment:
+      CONFIG_PASSWORD_FILE: /run/secrets/config_password
+      DB_USER_FILE: /run/secrets/authdb_user
+      DB_PASSWORD_FILE: /run/secrets/authdb_pass
+    networks:
+      - cloud
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 5
+    volumes:
+      - rabbitmq_directory:/var/lib/rabbitmq
+    secrets:
+      - rabbitmq_user
+      - rabbitmq_pass
+    environment:
+      RABBITMQ_DEFAULT_USER_FILE: /run/secrets/rabbitmq_user
+      RABBITMQ_DEFAULT_PASS_FILE: /run/secrets/rabbitmq_pass
+    networks:
+      - cloud
+
+  bookdb:
+    image: mongo
+    ports:
+      - "4001:27017"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 5
+    volumes:
+      - bookdb_data:/data/db
+    networks:
+      - cloud
+
+  bookserv:
+    image: bookstore-bookserv
+    ports:
+      - "8082:8080"
+      - "9082:8081"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+    secrets:
+      - config_password
+      - rabbitmq_user
+      - rabbitmq_pass
+    environment:
+      CONFIG_PASSWORD_FILE: /run/secrets/config_password
+      RABBIT_USER_FILE: /run/secrets/rabbitmq_user
+      RABBIT_PASS_FILE: /run/secrets/rabbitmq_pass
+    networks:
+      - cloud
+
+  logserv:
+    image: bookstore-logserv
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+    secrets:
+      - config_password
+      - rabbitmq_user
+      - rabbitmq_pass
+    environment:
+      CONFIG_PASSWORD_FILE: /run/secrets/config_password
+      RABBIT_USER_FILE: /run/secrets/rabbitmq_user
+      RABBIT_PASS_FILE: /run/secrets/rabbitmq_pass
+    networks:
+      - cloud
+
+  gateway:
+    image: bookstore-gateway
+    ports:
+      - "8083:8080"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+    secrets:
+      - config_password
+    environment:
+      CONFIG_PASSWORD_FILE: /run/secrets/config_password
+    networks:
+      - cloud
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+    volumes:
+      - prometheus:/prometheus
+    configs:
+      - source: prometheus_conf
+        target: /etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    networks:
+      - cloud
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+    volumes:
+      - grafana:/var/lib/grafana
+    secrets:
+      - grafana_pass
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD_FILE: /run/secrets/grafana_pass
+    networks:
+      - cloud
+
+volumes:
+  authdb_data:
+  rabbitmq_directory:
+  bookdb_data:
+  prometheus:
+  grafana:
+
+networks:
+  cloud:
+
+configs:
+  authdb_generate:
+    file: deploy/config/authdb.sql
+  prometheus_conf:
+    file: deploy/config/prometheus.yml
+
+secrets:
+  config_password:
+    file: deploy/secrets/config_password.txt
+  config_encrypt:
+    file: deploy/secrets/config_encrypt.txt
+  authdb_root:
+    file: deploy/secrets/authdb_root.txt
+  authdb_user:
+    file: deploy/secrets/authdb_user.txt
+  authdb_pass:
+    file: deploy/secrets/authdb_pass.txt
+  rabbitmq_user:
+    file: deploy/secrets/rabbitmq_user.txt
+  rabbitmq_pass:
+    file: deploy/secrets/rabbitmq_pass.txt
+  grafana_pass:
+    file: deploy/secrets/grafana_pass.txt
