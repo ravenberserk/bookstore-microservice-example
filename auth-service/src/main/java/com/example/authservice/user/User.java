@@ -1,4 +1,4 @@
-package com.example.authservice.domain;
+package com.example.authservice.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User implements UserDetails, Serializable {
+class User implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 4220218053067773185L;
 

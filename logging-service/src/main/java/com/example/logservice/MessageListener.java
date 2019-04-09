@@ -1,4 +1,4 @@
-package com.example.logservice.consumer;
+package com.example.logservice;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -7,10 +7,10 @@ import org.springframework.cloud.stream.messaging.Sink;
 
 @EnableBinding(Sink.class)
 @Log4j2
-public class LogConsumer {
+class MessageListener {
 
     @StreamListener(target = Sink.INPUT)
-    public void logProcess(String process) {
+    void logProcess(String process) {
         log.info(process);
     }
 

@@ -1,6 +1,5 @@
-package com.example.authservice.service;
+package com.example.authservice.user;
 
-import com.example.authservice.repository.UserRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -8,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     UserRespository userRespository;

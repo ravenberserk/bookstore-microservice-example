@@ -1,4 +1,4 @@
-package com.example.authservice.controller;
+package com.example.authservice.user;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,10 +8,10 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+class UserController {
 
     @GetMapping(value = "/current")
-    public Principal getUser(Principal principal) {
+    Principal getUser(Principal principal) {
         return principal;
     }
 

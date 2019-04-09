@@ -1,4 +1,4 @@
-package com.example.authservice.domain;
+package com.example.authservice.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "authorities")
-public class Authority implements GrantedAuthority, Serializable {
+class Authority implements GrantedAuthority, Serializable {
 
     private static final long serialVersionUID = -5975835326509963502L;
 
